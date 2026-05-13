@@ -41,10 +41,19 @@ class ClassSelectorUI:
             self.icon_path = str(BASE_DIR / "assets" / "LS20260513150828.png")
             img = Image.open(self.icon_path)
             
+            # 创建多种尺寸的图标
             icon_sizes = [(16, 16), (32, 32), (48, 48), (64, 64), (128, 128)]
             self.app_icons = [ImageTk.PhotoImage(img.resize(s, Image.Resampling.LANCZOS)) for s in icon_sizes]
             
+            # 设置窗口图标（iconphoto 适用于所有平台）
             self.root.iconphoto(True, *self.app_icons)
+            
+            # Windows 任务栏图标设置
+            import sys
+            if sys.platform == "win32":
+                import ctypes
+                myappid = "chestnut.namepicker.1.0"
+                ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
         except Exception as e:
             print(f"设置图标失败: {e}")
     
