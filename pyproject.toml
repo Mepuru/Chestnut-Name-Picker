@@ -1,6 +1,6 @@
 [project]
 name = "chestnut-name-picker"
-version = "0.1.0"
+version = "1.1.0"
 description = "基于 ttkbootstrap 的名单随机抽选工具，支持多规则筛选"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -9,4 +9,9 @@ dependencies = [
     "pandas>=3.0.3",
     "pillow>=12.2.0",
     "ttkbootstrap>=1.20.3",
+]
+
+[dependency-groups]
+dev = [
+    "pyinstaller>=6.20.0",
 ]
