@@ -6,6 +6,7 @@
 名单随机抽选工具 - 基于 ttkbootstrap 的多规则筛选抽选器
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 </div>
 
@@ -108,8 +109,10 @@ Chestnut-Name-Picker/
 │   ├── styles.py            # 样式配置
 │   └── utils.py             # 工具函数
 ├── tests/                   # 测试文件
+├── docs/                    # 文档
 ├── main.py                  # 主入口
 ├── pyproject.toml           # 项目配置
+├── LICENSE                  # MIT 协议
 └── README.md
 ```
 
