@@ -38,7 +38,7 @@ class ClassSelectorUI:
     def _setup_icon(self):
         """设置窗口图标"""
         try:
-            self.icon_path = str(BASE_DIR / "assets" / "chestnut_2153101.png")
+            self.icon_path = str(BASE_DIR / "assets" / "LS20260513150828.png")
             img = Image.open(self.icon_path)
             
             icon_sizes = [(16, 16), (32, 32), (48, 48), (64, 64), (128, 128)]
