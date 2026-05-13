@@ -5,7 +5,9 @@
 """
 
 import time
-from typing import Dict
+import tkinter as tk
+import ttkbootstrap as ttk
+from typing import Dict, Tuple
 
 
 def format_datetime(timestamp: int) -> str:
@@ -69,4 +71,46 @@ def format_student_info(student) -> str:
     return '\n'.join(info)
 
 
+def create_scrollable_frame(parent: ttk.Frame, tag: str = "content") -> Tuple[tk.Canvas, ttk.Frame]:
+    """
+    创建带垂直滚动条的可滚动框架
+    
+    Args:
+        parent: 父容器
+        tag: 画布窗口标签，用于后续配置
+        
+    Returns:
+        (canvas, inner_frame) 元组
+    """
+    # 创建带垂直滚动条的容器
+    scrollable_container = ttk.Frame(parent)
+    scrollable_container.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+    
+    # 创建垂直滚动条
+    v_scrollbar = ttk.Scrollbar(scrollable_container, orient=tk.VERTICAL)
+    v_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    
+    # 创建画布
+    canvas = tk.Canvas(scrollable_container, yscrollcommand=v_scrollbar.set)
+    canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+    v_scrollbar.config(command=canvas.yview)
+    
+    # 创建内部框架
+    inner_frame = ttk.Frame(canvas)
+    canvas.create_window((0, 0), window=inner_frame, anchor=tk.NW, tags=tag)
+    
+    # 绑定内部框架大小变化事件，更新滚动区域
+    def update_scroll_region(event):
+        canvas.configure(scrollregion=canvas.bbox("all"))
+    
+    inner_frame.bind("<Configure>", update_scroll_region)
+    
+    # 绑定画布大小变化事件，更新内部框架宽度
+    def update_canvas_width(event):
+        canvas_width = event.width - 2
+        canvas.itemconfig(tag, width=canvas_width)
+    
+    canvas.bind("<Configure>", update_canvas_width)
+    
+    return canvas, inner_frame
 

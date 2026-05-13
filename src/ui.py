@@ -12,7 +12,7 @@ from ttkbootstrap.constants import *
 from PIL import Image, ImageTk
 from src.data_handler import DataHandler
 from src.selector import StudentSelector
-from src.utils import format_datetime, format_stats
+from src.utils import format_datetime, format_stats, create_scrollable_frame
 from src.styles import configure_styles
 
 BASE_DIR = Path(__file__).parent.parent
@@ -718,7 +718,7 @@ class ClassSelectorUI:
         main_container = ttk.Frame(self.result_frame)
         main_container.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
         
-        # 抽选信息区域 - 使用ttkbootstrap样式
+        # 抽选信息区域
         info_frame = ttk.LabelFrame(main_container, text="抽选基本信息")
         info_frame.pack(fill=tk.X, pady=10, padx=10, ipady=10)
         
@@ -726,43 +726,15 @@ class ClassSelectorUI:
         self.info_text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         self.info_text.config(state=tk.DISABLED)
         
-        # 抽选名单区域 - 使用ttkbootstrap样式
+        # 抽选名单区域
         self.result_frame_container = ttk.LabelFrame(main_container, text="抽选名单")
         self.result_frame_container.pack(fill=tk.BOTH, expand=True, pady=10, padx=10, ipady=10)
         
-        # 创建带垂直滚动条的画布，用于解决多规则结果过长问题
-        scrollable_container = ttk.Frame(self.result_frame_container)
-        scrollable_container.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        # 使用工具函数创建可滚动框架
+        canvas, inner_frame = create_scrollable_frame(self.result_frame_container, "results_content")
+        self.results_inner_frame = inner_frame
         
-        # 创建垂直滚动条
-        v_scrollbar = ttk.Scrollbar(scrollable_container, orient=tk.VERTICAL)
-        v_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        
-        # 创建画布
-        canvas = tk.Canvas(scrollable_container, yscrollcommand=v_scrollbar.set)
-        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        v_scrollbar.config(command=canvas.yview)
-        
-        # 创建内部框架放置所有结果内容
-        self.results_inner_frame = ttk.Frame(canvas)
-        canvas.create_window((0, 0), window=self.results_inner_frame, anchor=tk.NW, tags="results_content")
-        
-        # 绑定内部框架大小变化事件，更新滚动区域
-        def update_scroll_region(event):
-            canvas.configure(scrollregion=canvas.bbox("all"))
-        
-        self.results_inner_frame.bind("<Configure>", update_scroll_region)
-        
-        # 绑定画布大小变化事件，更新内部框架宽度，确保规则容器能自适应边框
-        def update_canvas_window_width(event):
-            # 获取画布当前宽度，减去右边框宽度（约2像素）
-            canvas_width = event.width - 2
-            # 更新内部框架宽度，使其与画布宽度一致
-            canvas.itemconfig("results_content", width=canvas_width)
-        
-        canvas.bind("<Configure>", update_canvas_window_width)
-        
-        # 初始化表格容器，表格将在display_result中动态创建
+        # 初始化表格容器
         self.tree_container = ttk.Frame(self.results_inner_frame)
         self.tree_container.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
@@ -1164,40 +1136,11 @@ class ClassSelectorUI:
         for widget in self.result_frame_container.winfo_children():
             widget.destroy()
         
-        # 重新创建完整的滚动画布结构
-        # 创建带垂直滚动条的画布，用于解决多规则结果过长问题
-        scrollable_container = ttk.Frame(self.result_frame_container)
-        scrollable_container.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        # 使用工具函数重新创建可滚动框架
+        canvas, inner_frame = create_scrollable_frame(self.result_frame_container, "results_content")
+        self.results_inner_frame = inner_frame
         
-        # 创建垂直滚动条
-        v_scrollbar = ttk.Scrollbar(scrollable_container, orient=tk.VERTICAL)
-        v_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        
-        # 创建画布
-        canvas = tk.Canvas(scrollable_container, yscrollcommand=v_scrollbar.set)
-        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        v_scrollbar.config(command=canvas.yview)
-        
-        # 创建内部框架放置所有结果内容
-        self.results_inner_frame = ttk.Frame(canvas)
-        canvas.create_window((0, 0), window=self.results_inner_frame, anchor=tk.NW, tags="results_content")
-        
-        # 绑定内部框架大小变化事件，更新滚动区域
-        def update_scroll_region(event):
-            canvas.configure(scrollregion=canvas.bbox("all"))
-        
-        self.results_inner_frame.bind("<Configure>", update_scroll_region)
-        
-        # 绑定画布大小变化事件，更新内部框架宽度，确保规则容器能自适应边框
-        def update_canvas_window_width(event):
-            # 获取画布当前宽度，减去右边框宽度（约2像素）
-            canvas_width = event.width - 2
-            # 更新内部框架宽度，使其与画布宽度一致
-            canvas.itemconfig("results_content", width=canvas_width)
-        
-        canvas.bind("<Configure>", update_canvas_window_width)
-        
-        # 重新添加表格容器，注意添加到results_inner_frame中
+        # 重新添加表格容器
         self.tree_container = ttk.Frame(self.results_inner_frame)
         self.tree_container.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
