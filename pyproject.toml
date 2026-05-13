@@ -1,7 +1,7 @@
 [project]
 name = "chestnut-name-picker"
 version = "0.1.0"
-description = "Add your description here"
+description = "基于 ttkbootstrap 的名单随机抽选工具，支持多规则筛选"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
