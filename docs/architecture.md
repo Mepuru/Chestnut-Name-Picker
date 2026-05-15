@@ -5,7 +5,8 @@
 ```
 Chestnut-Name-Picker/
 ├── assets/                  # 资源文件
-│   └── LS20260513150828.png # 应用图标
+│   ├── LS20260513150828.png # 应用图标源文件
+│   └── icon.ico             # Windows 图标
 ├── data/                    # 数据文件
 │   └── test_data.xlsx       # 测试数据
 ├── src/                     # 源代码
@@ -15,13 +16,14 @@ Chestnut-Name-Picker/
 │   │   ├── rule_frame.py    # 规则框架
 │   │   └── preview_window.py # 数据预览窗口
 │   ├── __init__.py
-│   ├── data_handler.py      # 数据处理
+│   ├── data_handler.py      # 数据处理（openpyxl，无 pandas）
 │   ├── selector.py          # 抽选逻辑
 │   ├── styles.py            # 样式配置
 │   └── utils.py             # 工具函数
 ├── tests/                   # 测试文件
 ├── docs/                    # 文档
 ├── main.py                  # 主入口
+├── ChestnutNamePicker.spec # PyInstaller 打包配置
 ├── pyproject.toml           # 项目配置
 └── README.md
 ```

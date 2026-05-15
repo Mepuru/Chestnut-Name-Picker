@@ -96,7 +96,8 @@ uv run python tests/test_selector.py
 ```
 Chestnut-Name-Picker/
 ├── assets/                  # 资源文件
-│   └── LS20260513150828.png # 应用图标
+│   ├── LS20260513150828.png # 应用图标源文件
+│   └── icon.ico             # Windows 图标
 ├── data/                    # 数据文件
 │   └── test_data.xlsx       # 测试数据
 ├── src/                     # 源代码
@@ -119,8 +120,7 @@ Chestnut-Name-Picker/
 ## 技术栈
 
 - **UI 框架**: ttkbootstrap (Tkinter)
-- **数据处理**: pandas + openpyxl
-- **图像处理**: Pillow
+- **数据处理**: openpyxl（纯 Python，无 pandas 依赖）
 - **包管理**: uv
 
 ## 协议

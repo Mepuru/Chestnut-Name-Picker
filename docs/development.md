@@ -108,7 +108,11 @@ def test_feature():
 ### 生成 exe
 
 ```bash
-uv run pyinstaller --onefile --windowed --name "ChestnutNamePicker" --icon "assets/LS20260513150828.png" --add-data "assets;assets" main.py
+# 使用 spec 文件构建（推荐）
+uv run pyinstaller ChestnutNamePicker.spec --noconfirm
+
+# 或手动构建
+uv run pyinstaller --onefile --windowed --name "ChestnutNamePicker" --icon "assets/icon.ico" --add-data "assets;assets" main.py
 ```
 
 ### 输出位置

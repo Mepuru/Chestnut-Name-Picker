@@ -18,6 +18,5 @@
 
 - Python 3.11+
 - ttkbootstrap (Tkinter)
-- pandas + openpyxl
-- Pillow
+- openpyxl（Excel 读取）
 - uv (包管理)

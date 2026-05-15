@@ -2,7 +2,7 @@
 
 ## DataHandler 类
 
-负责读取和处理 Excel 文件中的数据。
+负责读取和处理 Excel 文件中的数据。使用 openpyxl 直接读取 Excel，无 pandas 依赖。
 
 ### 初始化
 
@@ -18,7 +18,7 @@ handler = DataHandler("data/test_data.xlsx")
 
 获取所有数据。
 
-**返回**: DataFrame
+**返回**: List[Dict[str, Any]] — 每个 Dict 代表一行，键为列名
 
 #### `get_columns()`
 
@@ -53,7 +53,7 @@ handler = DataHandler("data/test_data.xlsx")
 **参数**:
 - `filters`: 筛选条件字典，键为列名，值为筛选值
 
-**返回**: DataFrame
+**返回**: List[Dict[str, Any]]
 
 示例：
 ```python
@@ -79,6 +79,12 @@ filtered = handler.filter_data(filters={'性别': '男', '班级': '1班'})
 #### `reload_data()`
 
 重新加载数据。
+
+#### `df` (属性)
+
+兼容旧接口的 DataFrame 代理对象，提供 `iterrows()`、`columns`、`empty`、`head()` 等方法。
+
+**返回**: _DataFrameProxy
 
 ## 数据格式要求
 

@@ -2,7 +2,7 @@
 
 ## StudentSelector 类
 
-负责根据条件进行随机抽选。
+负责根据条件进行随机抽选。使用纯 Python 列表实现，无 pandas 依赖。
 
 ### 初始化
 
@@ -28,12 +28,12 @@ selector = StudentSelector(handler)
 
 ```python
 {
-    'selected_students': DataFrame,  # 所有规则合并后的学生列表
-    'rule_results': List[Dict],      # 每个规则单独的结果
-    'seed': int,                     # 随机种子
-    'total_candidates': int,         # 总候选人数
-    'stats': Dict,                   # 统计信息
-    'rules': List[Dict]              # 抽选规则列表
+    'selected_students': _DataFrameProxy,  # 所有规则合并后的学生列表（兼容 iterrows/columns/empty）
+    'rule_results': List[Dict],            # 每个规则单独的结果
+    'seed': int,                           # 随机种子
+    'total_candidates': int,               # 总候选人数
+    'stats': Dict,                         # 统计信息
+    'rules': List[Dict]                    # 抽选规则列表
 }
 ```
 

@@ -48,7 +48,7 @@ info = format_stats(stats)
 格式化学生信息为可读字符串。
 
 **参数**:
-- `student`: 学生数据（Series 对象）
+- `student`: 学生数据（dict 或 _SeriesProxy 对象）
 
 **返回**: str
 
@@ -56,7 +56,7 @@ info = format_stats(stats)
 ```python
 from src.utils import format_student_info
 
-info = format_student_info(student_series)
+info = format_student_info(student)
 # 输出:
 # 学号: 2023001
 # 姓名: 张三
