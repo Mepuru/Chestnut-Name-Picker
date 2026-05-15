@@ -1,5 +1,15 @@
 # 更新日志
 
+## [1.2.0] - 2026-05-15
+
+### 优化
+- 移除 pandas 和 numpy 依赖，使用 openpyxl 直接读取 Excel
+- 使用纯 Python 替代 pandas DataFrame 进行数据处理
+- 可执行文件体积从 42MB 缩减至 22MB（减少约 48%）
+
+### 修复
+- 修复 ttkbootstrap 对 PIL 的隐式依赖问题
+
 ## [1.1.1] - 2026-05-13
 
 ### 修复

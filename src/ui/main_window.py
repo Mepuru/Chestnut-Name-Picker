@@ -9,7 +9,6 @@ from tkinter import messagebox, filedialog
 from pathlib import Path
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
-from PIL import Image, ImageTk
 from src.data_handler import DataHandler
 from src.selector import StudentSelector
 from src.utils import format_datetime, format_stats, create_scrollable_frame
@@ -26,7 +25,7 @@ class ClassSelectorUI:
     def __init__(self):
         """初始化GUI界面"""
         self.root = ttk.Window(themename="litera")
-        self.root.title("ChestNut名单抽选工具V1.0")
+        self.root.title("ChestNut名单抽选工具V1.2")
         self.root.geometry("900x650")
         self.root.resizable(True, True)
         
@@ -39,16 +38,9 @@ class ClassSelectorUI:
         """设置窗口图标"""
         try:
             self.icon_path = str(BASE_DIR / "assets" / "LS20260513150828.png")
-            img = Image.open(self.icon_path)
-            
-            # 创建多种尺寸的图标
-            icon_sizes = [(16, 16), (32, 32), (48, 48), (64, 64), (128, 128)]
-            self.app_icons = [ImageTk.PhotoImage(img.resize(s, Image.Resampling.LANCZOS)) for s in icon_sizes]
-            
-            # 设置窗口图标（iconphoto 适用于所有平台）
-            self.root.iconphoto(True, *self.app_icons)
-            
-            # Windows 任务栏图标设置
+            self.app_icon = tk.PhotoImage(file=self.icon_path)
+            self.root.iconphoto(True, self.app_icon)
+
             import sys
             if sys.platform == "win32":
                 import ctypes
